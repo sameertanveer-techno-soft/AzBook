@@ -20,7 +20,7 @@ namespace AzBook.BookFunctions
         [Function("GetBooks")]
         public async Task<object> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
         {
-            _logger.LogInformation("C# HTTP trigger function processed a request.");
+            _logger.LogInformation("Retriving All Books");
 
             var books = await _bookServices.GetAllBooks();
             if (books != null)

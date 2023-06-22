@@ -10,5 +10,9 @@ namespace AzBook.Services
     public interface IBookServices
     {
         Task<List<Book>> GetAllBooks();
+        Task<Book> addBook(AddBookRequest addBookRequest);
+        Task<Book> updateBook(string id, UpdateBookRequest updateBookRequest);
+        Task<Book> deleteBook(string id);
+        Task<Book> getBookById(string id);
     }
 }
