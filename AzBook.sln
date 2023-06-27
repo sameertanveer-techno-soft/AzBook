@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32505.173
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzBook", "AzBook.csproj", "{E5AB585F-D40A-4DE6-88A3-6EF601EC6838}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzBook", "AzBook.csproj", "{E5AB585F-D40A-4DE6-88A3-6EF601EC6838}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

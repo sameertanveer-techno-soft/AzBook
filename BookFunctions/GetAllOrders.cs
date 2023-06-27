@@ -1,4 +1,5 @@
 using System.Net;
+using AzBook.Model;
 using AzBook.Services;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -6,22 +7,23 @@ using Microsoft.Extensions.Logging;
 
 namespace AzBook.BookFunctions
 {
-    public class GetBooks
+    public class GetAllOrders
     {
         private readonly ILogger _logger;
         private readonly IBookServices _bookServices;
 
-        public GetBooks(ILoggerFactory loggerFactory, IBookServices bookServices)
+        public GetAllOrders(ILoggerFactory loggerFactory, IBookServices bookServices)
         {
-            _logger = loggerFactory.CreateLogger<GetBooks>();
+            _logger = loggerFactory.CreateLogger<GetAllOrders>();
             _bookServices = bookServices;
         }
-        [Function("GetBooks")]
-        public async Task<object> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req )
-        {
-            _logger.LogInformation("Retriving All Books");
 
-            var books = await _bookServices.GetAllBooks();
+        [Function("GetAllOrders")]
+        public async Task<List<Order>> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
+        {
+            _logger.LogInformation("GetAllBooks");
+
+            var books = await _bookServices.getAllOrdes();
             if (books != null)
             {
                 req.CreateResponse(HttpStatusCode.OK);
@@ -29,7 +31,8 @@ namespace AzBook.BookFunctions
             }
             else
             {
-                return req.CreateResponse(HttpStatusCode.BadRequest);
+                req.CreateResponse(HttpStatusCode.BadRequest);
+                return null;
 
             }
         }

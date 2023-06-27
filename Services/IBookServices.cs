@@ -1,4 +1,5 @@
-﻿using AzBook.Model;
+﻿using AzBook.DTOs;
+using AzBook.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,9 @@ namespace AzBook.Services
         Task<Book> updateBook(string id, UpdateBookRequest updateBookRequest);
         Task<Book> deleteBook(string id);
         Task<Book> getBookById(string id);
+        Task<Order> orderBook(OrderDTO _order);
+        Task<List<Order>> getAllOrdes();
+        Task<object> getUserOrders(string userid);
+        Task<Order> returnBook(string id, OrderDTO NewOrder);
     }
 }
