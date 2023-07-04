@@ -1,8 +1,14 @@
 using System.Net;
+using AzBook.Middleware;
 using AzBook.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
+using Microsoft.Azure.ServiceBus;
+using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 
 namespace AzBook.BookFunctions
 {
@@ -16,22 +22,26 @@ namespace AzBook.BookFunctions
             _logger = loggerFactory.CreateLogger<GetBooks>();
             _bookServices = bookServices;
         }
+
         [Function("GetBooks")]
-        public async Task<object> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req )
+        [Authorize(Policy = "AdminOnly")]
+        public async Task<object> Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequestData req )
         {
+            string authHeader = "";
             _logger.LogInformation("Retriving All Books");
 
             var books = await _bookServices.GetAllBooks();
-            if (books != null)
+            if (books != null && req.Headers.TryGetValues("Authorization", out var authorizationHeaderValues))
             {
                 req.CreateResponse(HttpStatusCode.OK);
                 return books;
             }
             else
             {
-                return req.CreateResponse(HttpStatusCode.BadRequest);
+                return req.CreateResponse(HttpStatusCode.Unauthorized);
 
             }
         }
+ 
     }
 }
