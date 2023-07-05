@@ -1,4 +1,5 @@
 using System.Net;
+using AzBook.Middleware;
 using AzBook.Services;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
@@ -18,6 +19,7 @@ namespace AzBook.BookFunctions
         }
 
         [Function("GetUserOrders")]
+        [FunctionAuthorize(new[] { "User", "Admin" })]
         public async Task<object> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req, string userid)
         {
             _logger.LogInformation("Getting user's Orders by ID");

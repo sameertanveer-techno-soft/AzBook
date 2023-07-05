@@ -1,5 +1,6 @@
 using System.Net;
 using AzBook.DTOs;
+using AzBook.Middleware;
 using AzBook.Model;
 using AzBook.Services;
 using Microsoft.Azure.Functions.Worker;
@@ -21,6 +22,7 @@ namespace AzBook.BookFunctions
         }
 
         [Function("OrderBook")]
+        [FunctionAuthorize(new[] { "User", "Admin" })]
         public async Task<Order> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestData req)
         {
             _logger.LogInformation("Odering Book");

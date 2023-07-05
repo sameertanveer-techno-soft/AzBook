@@ -1,4 +1,5 @@
 using System.Net;
+using AzBook.Middleware;
 using AzBook.Model;
 using AzBook.Services;
 using Microsoft.Azure.Functions.Worker;
@@ -20,6 +21,7 @@ namespace AzBook.BookFunctions
         }
 
         [Function("UpdateBook")]
+        [FunctionAuthorize(new[] { "User", "Admin" })]
         public async Task<Book> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "put")] HttpRequestData req, string id)
         {
             _logger.LogInformation("Updating Book");

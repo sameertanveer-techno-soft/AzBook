@@ -10,20 +10,18 @@ using System.Text;
 using AzBook.Middleware;
 
 var host = new HostBuilder()
-    .ConfigureFunctionsWorkerDefaults()
+    .ConfigureFunctionsWorkerDefaults(configure =>
+    {
+        configure.UseMiddleware<AuthenticationMiddleware>();
+    })
     .ConfigureServices(services =>
     {
         services.AddDbContext<BookContext>(options =>
                 options.UseSqlServer("Server=TS-SAMEER-PC;Database=AzBooksDatabase;Trusted_Connection=true"));
         services.AddTransient<IBookServices, BookServices>();
-        services.AddTransient<AuthenticationMiddleware>();
         services.AddAutoMapper(typeof(Program));
        
     })
-   .ConfigureFunctionsWorker((context, worker) =>
-   {
-       worker.UseMiddleware<AuthenticationMiddleware>();
-   }, options => { })
    .Build();
 
 host.Run();

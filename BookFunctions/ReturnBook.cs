@@ -1,5 +1,6 @@
 using System.Net;
 using AzBook.DTOs;
+using AzBook.Middleware;
 using AzBook.Model;
 using AzBook.Services;
 using Microsoft.Azure.Functions.Worker;
@@ -21,6 +22,7 @@ namespace AzBook.BookFunctions
         }
 
         [Function("ReturnBook")]
+        [FunctionAuthorize(new[] { "User", "Admin" })]
         public async Task<Order> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "put")] HttpRequestData req, string id)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");

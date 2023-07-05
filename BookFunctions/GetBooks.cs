@@ -24,6 +24,7 @@ namespace AzBook.BookFunctions
         }
 
         [Function("GetBooks")]
+        [FunctionAuthorize(new[] { "User", "Admin" })]
         //[Authorize(Policy = "AdminOnly")]
         public async Task<object> Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequestData req )
         {

@@ -1,4 +1,5 @@
 using System.Net;
+using AzBook.Middleware;
 using AzBook.Model;
 using AzBook.Services;
 using Microsoft.Azure.Functions.Worker;
@@ -19,6 +20,7 @@ namespace AzBook.BookFunctions
         }
 
         [Function("DeleteBook")]
+        [FunctionAuthorize("Admin")]
         public async Task<Book> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "delete")] HttpRequestData req, string id)
         {
             _logger.LogInformation("Delete Book");

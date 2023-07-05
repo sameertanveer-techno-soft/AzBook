@@ -1,4 +1,5 @@
 using System.Net;
+using AzBook.Middleware;
 using AzBook.Model;
 using AzBook.Services;
 using Microsoft.Azure.Functions.Worker;
@@ -19,6 +20,7 @@ namespace AzBook.BookFunctions
         }
 
         [Function("GetAllOrders")]
+        [FunctionAuthorize("Admin")]
         public async Task<List<Order>> RunAsync([HttpTrigger(AuthorizationLevel.Anonymous, "get")] HttpRequestData req)
         {
             _logger.LogInformation("GetAllBooks");
