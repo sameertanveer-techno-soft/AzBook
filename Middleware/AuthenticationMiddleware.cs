@@ -21,18 +21,16 @@ namespace AzBook.Middleware
     {
 
 
-        public  async Task Invoke(FunctionContext context, FunctionExecutionDelegate next)
+        public async Task Invoke(FunctionContext context, FunctionExecutionDelegate next)
         {
             var httpRequestData = await context.GetHttpRequestDataAsync();
             var httpResponseData = httpRequestData.CreateResponse();
 
             if (!httpRequestData.Headers.TryGetValues(HeaderNames.Authorization, out var authorizationHeaderValues))
             {
-
-
                 httpResponseData.StatusCode = HttpStatusCode.Unauthorized;
                 httpResponseData.Body = new MemoryStream(Encoding.UTF8.GetBytes("Unauthorized: Missing Authorization header"));
-
+                return;
             }
             else
             {
@@ -52,7 +50,5 @@ namespace AzBook.Middleware
                 await next(context);
             }
         }
-
-       
     }
 }

@@ -24,14 +24,14 @@ namespace AzBook.BookFunctions
         }
 
         [Function("GetBooks")]
-        [Authorize(Policy = "AdminOnly")]
+        //[Authorize(Policy = "AdminOnly")]
         public async Task<object> Run([HttpTrigger(AuthorizationLevel.Function, "get")] HttpRequestData req )
         {
             string authHeader = "";
             _logger.LogInformation("Retriving All Books");
 
             var books = await _bookServices.GetAllBooks();
-            if (books != null && req.Headers.TryGetValues("Authorization", out var authorizationHeaderValues))
+            if (books != null)
             {
                 req.CreateResponse(HttpStatusCode.OK);
                 return books;
