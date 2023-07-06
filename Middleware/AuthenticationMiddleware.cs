@@ -22,6 +22,12 @@ namespace AzBook.Middleware
     {
         public async Task Invoke(FunctionContext context, FunctionExecutionDelegate next)
         {
+            var functionName = context.FunctionDefinition.Name;
+            if (functionName == "ProcessAddQueue")
+            {
+                await next(context);
+                return;
+            }
             var httpRequestData = await context.GetHttpRequestDataAsync();
             var httpResponseData = httpRequestData.CreateResponse();
 
