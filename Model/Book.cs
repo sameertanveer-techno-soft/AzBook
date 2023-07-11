@@ -18,5 +18,6 @@ namespace AzBook.Model
         public string? UpdatedBy { get; set; }
         public string? Status { get; set; }
         public int Quantity { get; set; } = 1;
+        public string? BookCoverUrl { get; set; }
     }
 }

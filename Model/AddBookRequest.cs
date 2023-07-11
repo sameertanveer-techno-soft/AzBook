@@ -13,5 +13,6 @@ namespace AzBook.Model
         public string Description { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public string CreatedBy { get; set; }
+        public string? CoverUrl { get; set; }
     }
 }

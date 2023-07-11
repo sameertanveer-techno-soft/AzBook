@@ -10,6 +10,7 @@ using System.Text;
 using AzBook.Middleware;
 using Microsoft.Extensions.Azure;
 using Azure.Storage.Queues;
+using Azure.Storage.Blobs;
 
 var host = new HostBuilder()
     .ConfigureFunctionsWorkerDefaults(configure =>
@@ -21,6 +22,7 @@ var host = new HostBuilder()
         services.AddDbContext<BookContext>(options =>
                 options.UseSqlServer("Server=TS-SAMEER-PC;Database=AzBooksDatabase;Trusted_Connection=true"));
         services.AddTransient<IBookServices, BookServices>();
+        services.AddTransient<IBlobServices, BlobServices>();
         services.AddHttpClient();
         services.AddAutoMapper(typeof(Program));
         services.AddAzureClients(option =>
@@ -34,6 +36,7 @@ var host = new HostBuilder()
                     MessageEncoding = QueueMessageEncoding.Base64
                 });
             });
+           
         });
     })
    .Build();

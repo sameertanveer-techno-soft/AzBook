@@ -34,7 +34,9 @@ namespace AzBook.Services
                 Description = addBookRequest.Description,
                 CreatedBy = addBookRequest.CreatedBy,
                 UpdatedBy = "",
-                Status = "Available"
+                Status = "Available",
+                BookCoverUrl = addBookRequest.CoverUrl
+                
             };
             await _bookContext.Books.AddAsync(book);
             await _bookContext.SaveChangesAsync();
